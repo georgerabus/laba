@@ -1,8 +1,11 @@
 import streamlit as st
-import Pages.DarkMode
-import Pages.AI
+from pages.util.DarkMode import *
+import pages.AI
 
 def write():
+    app = FeatureActivator()
+    app.run()
+    
     st.write("# QuickFinder Demo")
 
     st.write("""Use Cases:
