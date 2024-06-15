@@ -3,6 +3,7 @@ from streamlit_chatbox import *
 import time
 import simplejson as json
 
+
 llm = FakeLLM()
 chat_box = ChatBox()
 chat_box.use_chat_name("chat1")  # add a chat conversation
@@ -145,8 +146,32 @@ if st.session_state.get("show_chat", False):
 
 def main():
     st.title("QuickFinder")
-    if st.button("Prepare Yourself for the Upcoming Quiz!"):
-        st.write("QuickFinder: Your Perfect Laptop Match in Minutes🚀")
+    if "page" not in st.session_state:
+        st.session_state.page = 0
+
+    def next_page():
+        st.session_state.page += 1
+
+    def prev_page():
+        st.session_state.page -= 1
+
+    pages = [
+        "Welcome to the quiz! Prepare yourself.",
+        "Question 1: What is your favorite color?",
+        "Question 2: What is your favorite animal?",
+        "Question 3: What is your favorite food?",
+        "Question 4: What is your favorite movie?",
+        "Question 5: What is your favorite book?",
+        "Thank you for completing the quiz!"
+    ]
+
+    st.write(pages[st.session_state.page])
+
+    col1, col2 = st.columns(2)
+    if st.session_state.page > 0:
+        col1.button("Previous", on_click=prev_page)
+    if st.session_state.page < len(pages) - 1:
+        col2.button("Next", on_click=next_page)
 
 if __name__ == "__main__":
     main()
