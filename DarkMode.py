@@ -1,6 +1,6 @@
 import streamlit as st
 
-def main():
+class darkmode():
     DarkMode = st.toggle(" DarkMode ")
    
 
