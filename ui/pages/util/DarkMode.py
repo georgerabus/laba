@@ -1,21 +1,46 @@
 import streamlit as st
+import os
 
 class FeatureActivator:
     def __init__(self):
-        self.on = st.sidebar.toggle("DarkMode🌙")
-        self.off = st.sidebar.toggle("WhiteMode☀️")
+        st.sidebar.toggle("DarkMode🌙", key="t1", value=False)
+        self.current_command = 1 
 
     def run(self):
-        if self.on:
-            st.write("Feature activated!")
+        current_dir = os.getcwd()
+        config_path = os.path.join(current_dir, '.streamlit', 'config.toml')
+        
+        if  st.session_state.t1  == True:
             
-        else:
-            st.write("Feature deactivated.")
-            self.on = st.sidebar.toggle("WhiteMode☀️")
+            with open(config_path, "w+") as f:
+                f.write("""
+                    [theme]
+                    base = "dark"
+                """)
+        if  st.session_state.t1  == False:
+            with open(config_path, "w+") as f:
+                f.write("""
+                    [theme]
+                    base = "light"
+                """)
 
 
-if __name__ == "__main__":
-    app = FeatureActivator()
-    app2 = FeatureActivator()
-    app.run()
-    app2.run()
+    # def run(self):
+    #     current_dir = os.getcwd()
+    #     config_path = os.path.join(current_dir, '.streamlit', 'config.toml')
+        
+    #     if self.on == True:
+    #         st.write("Second-Hand activated")
+            
+    #         with open(config_path, "w+") as f:
+    #             f.write("""
+    #                 [theme]
+    #                 base = "dark"
+    #             """)
+    #     if self.on == False:
+    #         st.write("First-Hand activated.")
+    #         with open(config_path, "w+") as f:
+    #             f.write("""
+    #                 [theme]
+    #                 base = "light"
+    #             """)
